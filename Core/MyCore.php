@@ -12,15 +12,30 @@ class MyCore
         $action = $route->action;
         $controllerFile = APPPATH.'/Controller/'.str_replace('\\', '/', $controllerName).'.php';
         $controllerClass = '\\'.MODULE.'\Controller\\'.$controllerName.'Controller';
+        $extract = explode('\\', $controllerName);
+        $prefix = $extract[0]=='admin' ? 'admin\\' : '';
+        $defaultController = ucfirst(\Core\Libraries\conf::get('Controller', 'route'));
+        $defaultFile = APPPATH.rtrim('/Controller/'.trim($prefix, '\\'), '/').'/'.$defaultController.'.php';
+        $defaultClass = str_replace($controllerName, $prefix.$defaultController, $controllerClass);
+        $defaultAction = \Core\Libraries\conf::get('Action', 'route');
         if(is_file($controllerFile)){
-            include $controllerFile;
-            $controller = new $controllerClass();
-            $controller->preDo();
-            $controller->$action();
-            \Core\Libraries\log::log('controller:'.$controllerName.' action:'.$action);
+            require_once $controllerFile;
+            if(!method_exists($controllerClass, $action)){
+                $controllerClass = $defaultClass;
+                $controllerFile = $defaultFile;
+                $action = $defaultAction;
+            }
         }else{
-            throw new \Exception('找不到控制器'.$controllerName);
+            //throw new \Exception('找不到控制器'.$controllerName);
+            $controllerClass = $defaultClass;
+            $controllerFile = $defaultFile;
+            $action = $defaultAction;
         }
+        require_once $controllerFile;
+        $controller = new $controllerClass();
+        $controller->preDo();
+        $controller->$action();
+        \Core\Libraries\log::log('controller:'.$controllerClass.' action:'.$action);
     }
 
     static public function load($class)

@@ -1,15 +1,15 @@
 <?php
 namespace Application\Controller\admin;
 
-class indexController extends \Core\Libraries\APP\Controller
+class IndexController extends \Core\Libraries\APP\Controller
 {
     public function preDo()
     {
-        echo "first";
+        echo "preDo";
     }
-    public function index1()
+    public function index()
     {
-        $data = array('Hello World');
+        $data = 'Hello World admin';
         /*
         $model = $this->loadModel('admin_index');
         $data = $model->getVal('ttable', '*');

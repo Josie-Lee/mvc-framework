@@ -18,17 +18,16 @@ class route
             $path = explode('?', $_SERVER['REQUEST_URI']);
             $path = is_array($path) ? $path[0] : $path;
             $arr = explode('/', trim($path, '/'));
-            $count = count($arr);
             $i = 0;
             if(isset($arr[$i])){
                 if($arr[$i] == 'admin'){
                     if(isset($arr[$i+1])){
-                        $this->controller = 'admin\\' . $arr[++$i];
+                        $this->controller = 'admin\\' . ucfirst($arr[++$i]);
                     }else{
-                        $this->controller = 'admin\\' . conf::get('Controller', 'route');
+                        $this->controller = 'admin\\' . ucfirst(conf::get('Controller', 'route'));
                     }
                 }else{
-                    $this->controller = $arr[$i];
+                    $this->controller = ucfirst($arr[$i]);
                 }
                 $i++;
             }
@@ -38,7 +37,7 @@ class route
                 $this->action = conf::get('Action', 'route');
             }
         }else {
-            $this->controller = conf::get('Controller', 'route');
+            $this->controller = ucfirst(conf::get('Controller', 'route'));
             $this->action = conf::get('Action', 'route');
         }
     }
