@@ -1,8 +1,12 @@
 <?php
 namespace Application\Model\admin;
-use Core\Libraries\APP\Model;
-class indexModel extends Model
+
+class indexModel extends \Core\Libraries\APP\Model
 {
+    public function __construct()
+    {
+        $this->db = \Core\Common\Db::d(\Core\Common\Db::TEST);
+    }
     public function getVal($table, $col, $where=array())
     {
         if(empty($table)){
@@ -13,12 +17,12 @@ class indexModel extends Model
             echo "请输入要查找的列名";
             exit;
         }
-        return $this->select($table, $col, $where);
+        return $this->db->select($table, $col, $where);
     }
 
     public function insertVal($table, $data)
     {
-        $ret = $this->insert($table, $data);
+        $ret = $this->db->insert($table, $data);
         return $ret===false ? false : $this->id();
     }
 }
