@@ -64,13 +64,23 @@ class MyCore
         $this->assign[$name] = $value;
     }
 
+    public function assignArray($value)
+    {
+        if(is_array($value)){
+            foreach ($value as $key => $val) {
+                $this->assign[$key] = $val;
+            }
+        }
+    }
+
     public function display($file)
     {
-
         $file = APPPATH.'/View/'.trim($file, '/');
         if(is_file($file)){
             extract($this->assign);
             include $file;
+        }else{
+            exit('找不到对应的模板');
         }
 
     }

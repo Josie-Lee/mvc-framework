@@ -13,4 +13,11 @@ class Controller extends \Core\MyCore
         require_once $path;
         return new $modelClass;
     }
+
+    public function error($message, $url)
+    {
+        $this->assign('msg', $message);
+        $this->assign('url', $url);
+        $this->display('errorpage.html');
+    }
 }
