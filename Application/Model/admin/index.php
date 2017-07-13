@@ -1,11 +1,14 @@
 <?php
 namespace Application\Model\admin;
 
-class indexModel extends \Core\Libraries\APP\Model
+use Core\Common\Db;
+use Core\Libraries\APP\Model;
+
+class indexModel extends Model
 {
     public function __construct()
     {
-        $this->db = \Core\Common\Db::d(\Core\Common\Db::TEST);
+        $this->db = Db::d('test');
     }
     public function getVal($table, $col, $where=array())
     {

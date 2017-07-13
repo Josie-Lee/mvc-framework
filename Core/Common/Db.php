@@ -1,9 +1,9 @@
 <?php
 namespace Core\Common;
+use Core\Libraries\conf;
+
 class Db
 {
-    const BLOG = 'blog';
-    const TEST = 'test';
     private static $db = array();
 
     private function __construct()
@@ -15,9 +15,10 @@ class Db
         if(isset(self::$db[$name])){
             return self::$db[$name];
         }
-        $conf = \Core\Libraries\conf::get(self::TEST, 'database');
+        $conf = conf::get($name, 'database');
         return self::add($name, $conf);
     }
+
     public static function add($name, $conf)
     {
         self::$db[$name] = new \Medoo\Medoo($conf);

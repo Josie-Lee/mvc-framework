@@ -7,12 +7,11 @@ class Func
     }
     public function checkLogin()
     {
-        $db = \Core\Common\Db::d(\Core\Common\Db::TEST);
+        $db = Db::d('test');
 
     }
     public function getUser()
     {
 
     }
-
 }

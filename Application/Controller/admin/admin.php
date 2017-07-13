@@ -1,15 +1,19 @@
 <?php
 namespace Application\Controller\admin;
-
 use Core\Common\Func;
+use Core\Libraries\APP\Controller;
 
-class AdminController extends \Core\Libraries\APP\Controller
+class AdminController extends Controller
 {
     public function preDo()
     {
         session_start();
         $this->func = new Func();
         $this->model = $this->loadModel('admin_admin');
+    }
+    public function index()
+    {
+        $this->display('test.html');
     }
     public function register()
     {
@@ -44,6 +48,18 @@ class AdminController extends \Core\Libraries\APP\Controller
         $userName = $_POST['username'];
         $password = $_POST['password'];
         $ret = $this->model->checkUser($userName, $password);
+        if(false === $ret){
+            exit('获取用户信息失败');
+        }
+        if(-1 === $ret){
+            $this->error('用户尚未注册', 'admin/admin/register');
+            exit;
+        }
+        if(0 === $ret){
+            $this->error('用户名或密码错误', 'admin/admin/login');
+            exit;
+        }
+        header('Location: index');
 
     }
     public function addSession($data)

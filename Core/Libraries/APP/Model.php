@@ -1,16 +1,19 @@
 <?php
 namespace Core\Libraries\APP;
 
+use Core\Common\Db;
+use Core\Common\Re;
+
 class Model
 {
-    /*
-    const BLOG = 'blog';
-    const TEST = 'test';
-    public function __construct()
+    public function loadDb($name)
     {
-        //$option = \Core\Libraries\conf::get(self::TEST, 'database');
-        //parent::__construct($option);
-
+        return Db::d($name);
     }
-    */
+
+    public function loadRedis($name)
+    {
+        return Re::r($name);
+    }
+
 }

@@ -1,12 +1,15 @@
 <?php
 namespace Application\Model\admin;
+use Core\Common\Db;
+use Core\Libraries\APP\Model;
 
-class adminModel extends \Core\Libraries\APP\Model
+class adminModel extends Model
 {
     private $table = 'user';
     public function __construct()
     {
-        $this->db = \Core\Common\Db::d(\Core\Common\Db::TEST);
+        $this->redis = $this->loadRedis('test');
+        $this->db = Db::d('test');
     }
     public function getVal($col, $where=array())
     {
@@ -26,9 +29,18 @@ class adminModel extends \Core\Libraries\APP\Model
     public function checkUser($username, $password)
     {
         if(!empty($username) && !empty($password)){
-            $ret = $this->db->select($this->table, array('nickname'), array('username'=>$username, 'password'=>$password));
-            var_dump($ret); exit;
+            $ret = $this->db->select($this->table, array('id'), array('username'=>$username));
+            if(!count($ret)){
+                return -1;
+            }
+            $ret = $this->db->select($this->table, array('id'), array('username'=>$username, 'password'=>$password));
+            if(count($ret)){
+                return true;
+            }else{
+                return 0;
+            }
         }
+        return false;
     }
 
     public function addUser($data)

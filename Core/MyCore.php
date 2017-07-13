@@ -3,7 +3,7 @@ namespace Core;
 class MyCore
 {
     public static $classMap = array();
-    public $assign;
+    public $assign = array();
     static public function run()
     {
         \Core\Libraries\log::init();
@@ -77,7 +77,9 @@ class MyCore
     {
         $file = APPPATH.'/View/'.trim($file, '/');
         if(is_file($file)){
-            extract($this->assign);
+            if(!count($this->assign)){
+                extract($this->assign);
+            }
             include $file;
         }else{
             exit('找不到对应的模板');
