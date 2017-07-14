@@ -13,6 +13,9 @@ class AdminController extends Controller
     }
     public function index()
     {
+        $page = isset($_POST['page']) ? $_POST['page'] : 1;
+        $itemNum = 20;
+        //$data = $this->model->getTitles()
         $this->display('test.html');
     }
     public function register()
@@ -45,21 +48,25 @@ class AdminController extends Controller
     }
     public function login()
     {
-        $userName = $_POST['username'];
-        $password = $_POST['password'];
-        $ret = $this->model->checkUser($userName, $password);
-        if(false === $ret){
-            exit('获取用户信息失败');
+        if($_POST){
+            $userName = $_POST['username'];
+            $password = $_POST['password'];
+            $ret = $this->model->checkUser($userName, $password);
+            if(false === $ret){
+                exit('获取用户信息失败');
+            }
+            if(-1 === $ret){
+                $this->error('用户尚未注册', 'admin/admin/register');
+                exit;
+            }
+            if(0 === $ret){
+                $this->error('用户名或密码错误', 'admin/admin/login');
+                exit;
+            }
+            header('Location: /admin/admin/index');
         }
-        if(-1 === $ret){
-            $this->error('用户尚未注册', 'admin/admin/register');
-            exit;
-        }
-        if(0 === $ret){
-            $this->error('用户名或密码错误', 'admin/admin/login');
-            exit;
-        }
-        header('Location: index');
+        $this->display('/admin/login.html');
+
 
     }
     public function addSession($data)

@@ -11,8 +11,13 @@ class IndexController extends Controller
     }
     public function index()
     {
-        $data = 'Hello World admin';
-        $this->assign('data',$data);
-        $this->display('admin/login.html');
+        if(isset($_POST['test'])){
+            $data = $_POST['test'];
+            p($data);
+            exit;
+        }
+        $this->display('test.html');
+        //$this->assign('data',$data);
+        //$this->display('admin/login.html');
     }
 }

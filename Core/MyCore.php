@@ -1,9 +1,17 @@
 <?php
 namespace Core;
+/**
+ * Class MyCore
+ * @package Core
+ */
 class MyCore
 {
     public static $classMap = array();
     public $assign = array();
+
+    /**
+     * @throws \Exception
+     */
     static public function run()
     {
         \Core\Libraries\log::init();
@@ -38,6 +46,10 @@ class MyCore
         \Core\Libraries\log::log('controller:'.$controllerClass.' action:'.$action);
     }
 
+    /**
+     * @param $class
+     * @return bool
+     */
     static public function load($class)
     {
         //自动加载类库
@@ -59,6 +71,10 @@ class MyCore
 
     }
 
+    /**
+     * @param $name
+     * @param $value
+     */
     public function assign($name, $value)
     {
         $this->assign[$name] = $value;
@@ -77,7 +93,7 @@ class MyCore
     {
         $file = APPPATH.'/View/'.trim($file, '/');
         if(is_file($file)){
-            if(!count($this->assign)){
+            if(count($this->assign)){
                 extract($this->assign);
             }
             include $file;

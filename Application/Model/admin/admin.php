@@ -5,7 +5,7 @@ use Core\Libraries\APP\Model;
 
 class adminModel extends Model
 {
-    private $table = 'user';
+    public $table = 'user';
     public function __construct()
     {
         $this->redis = $this->loadRedis('test');
@@ -45,13 +45,35 @@ class adminModel extends Model
 
     public function addUser($data)
     {
-
         if(!empty($data)){
             $ret = $this->db->insert($this->table, $data);
-            return $ret===false? false : true;
+            return $ret===false ? false : true;
         }else{
             return false;
         }
+    }
 
+    public function setPager($url, $currPage, $table)
+    {
+        $ret = $this->db->select($table, array('id'), array());
+        $totalItems = (false === $ret) ? 0: count($ret);
+        $pager = $this->loadPager()->setCurrPage($currPage)
+            ->settotalItems($totalItems)
+            ->setUrl($url)
+            ->finish();
+        return $pager;
+    }
+    public function test()
+    {
+        $ret = $this->db->select('test', '*', []);
+        var_dump($ret);exit;
+    }
+
+    public function getPageList($pager, $table, $col, $where = array())
+    {
+        $start = ($pager->curr-1)*($pager->itemNum);
+        $where['LIMIT'] = ["$start,$pager->itemNum"];
+        $ret = $this->db->select('test', '*', $where);
+        var_dump($ret);exit;
     }
 }

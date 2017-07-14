@@ -2,6 +2,7 @@
 namespace Core\Libraries\APP;
 
 use Core\Common\Db;
+use Core\Common\Pager;
 use Core\Common\Re;
 
 class Model
@@ -14,6 +15,11 @@ class Model
     public function loadRedis($name)
     {
         return Re::r($name);
+    }
+
+    public function loadPager()
+    {
+        return new Pager();
     }
 
 }
