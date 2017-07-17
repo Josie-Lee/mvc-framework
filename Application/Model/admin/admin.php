@@ -8,7 +8,7 @@ class adminModel extends Model
     public $table = 'user';
     public function __construct()
     {
-        $this->redis = $this->loadRedis('test');
+        //$this->redis = $this->loadRedis('test');
         $this->db = Db::d('test');
     }
     public function getVal($col, $where=array())

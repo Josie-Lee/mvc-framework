@@ -12,11 +12,11 @@ class IndexController extends Controller
     public function index()
     {
         $page = isset($_GET['page']) ? $_GET['page'] :1;
-        $pager = $this->model->setPager('/index/index?page=', $page, 'user');
-        $data = $this->model->getPageList($pager, 'test', '*', []);
+        $pager = $this->model->setPager('/index/index?page=', $page, 'test');
+        //$data = $this->model->getPageList($pager, 'test', '*', []);
 
         $this->assign('pager',$pager);
-        $this->display($pager->url);
+        $this->display('admin/index.html');
 
     }
 }
