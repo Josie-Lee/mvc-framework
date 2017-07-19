@@ -1,9 +1,4 @@
 <?php
-/**
- * @desc Created by PhpStorm.
- * @author: Administrator
- * @since: 2017/5/25 11:11
- */
 namespace Core\Libraries;
 
 class log
@@ -22,8 +17,8 @@ class log
         //return self::$class;
     }
 
-    static public function log($name, $file = 'log')
+    static public function log($message)
     {
-        self::$class->log($name);
+        self::$class->log($message);
     }
 }

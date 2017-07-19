@@ -1,9 +1,4 @@
 <?php
-/**
- * @desc Created by PhpStorm.
- * @author: Administrator
- * @since: 2017/5/25 11:12
- */
 namespace Core\Libraries\driver\log;
 
 use Core\Libraries\conf;

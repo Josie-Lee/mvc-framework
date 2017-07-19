@@ -15,5 +15,13 @@ return [
         'username' => 'root',
         'password' => '1234',
         'charset' => 'utf8',
+    ],
+    'log' => [
+        'database_type' => 'mysql',
+        'database_name' => 'log',
+        'server' => 'localhost',
+        'username' => 'root',
+        'password' => '1234',
+        'charset' => 'utf8',
     ]
 ];
